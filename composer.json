@@ -9,5 +9,7 @@
             "email": "kimbongyeon83@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpunit/phpunit": "^5.6"
+    }
 }
