@@ -1,0 +1,13 @@
+{
+    "name": "sens/split-sens",
+    "description": "split phrase to sentences",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bong Yeon, Kim",
+            "email": "kimbongyeon83@gmail.com"
+        }
+    ],
+    "require": {}
+}
