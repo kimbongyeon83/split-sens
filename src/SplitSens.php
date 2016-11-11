@@ -12,7 +12,9 @@ class SplitSens
     {
         $sens = [];
         if (is_integer($phrase)) {
-            $sens[] = $phrase;
+            return $sens;
+        }
+        if (is_numeric($phrase)) {
             return $sens;
         }
 
@@ -21,21 +23,34 @@ class SplitSens
             return $sens;
         }
 
+        # pre filterling
         $phrase = trim($phrase);
+        $phrase = preg_replace('/(&#?[a-z0-9]+;?)/i', '', $phrase);
+        $phrase = preg_replace('/(【[^】]*】)/i', '', $phrase);
+        $phrase = strip_tags($phrase);
+        $phrase = preg_replace('/[^\p{L}\p{N}\n.?;。！~◎☆★!♪ ]/u', '', $phrase);
         if (strlen($phrase) < 1) {
             $sens = [];
             return $sens;
         }
 
-        #$sens = explode('.', $phrase);
-        $regexp = '/(?<=[^\n.?;。！~◎☆★!♪])[\n.?;。！~◎☆★!♪]/u';
+        $regexp = '/(?<=[^\n.?;。！~◎☆★!♪])[\n.?;。！~◎☆★!♪]+/u';
         $sens = preg_split($regexp, $phrase);
-        if (sizeof($sens) > 0) {
-            $sens = array_map('trim', $sens);
-            $sens = array_filter($sens);
+        if (sizeof($sens) < 1) {
             return $sens;
         }
 
+        $sens = array_map('trim', $sens);
+        $newsens = [];
+        foreach ($sens AS $sentens) {
+            $tmpsens = preg_replace('/^[0-9\s]*$/i', '', $sentens);
+            if (empty($tmpsens)) {
+                continue;
+            }
+            $newsens[] = $tmpsens;
+        }
+        $sens = $newsens;
+        $sens = array_filter($sens);
         return $sens;
     }
 }
