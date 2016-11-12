@@ -9,7 +9,11 @@
             "email": "kimbongyeon83@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4" : {
+            "SplitSens\\" : "src/"
+        }
+    },
     "require": {
-        "phpunit/phpunit": "^5.6"
     }
 }
