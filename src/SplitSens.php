@@ -8,7 +8,7 @@ class SplitSens
     {
     }
 
-    public function split($phrase=null)
+    public function split($phrase = null)
     {
         $sens = [];
         if (is_integer($phrase)) {
@@ -42,7 +42,7 @@ class SplitSens
 
         $sens = array_map('trim', $sens);
         $newsens = [];
-        foreach ($sens AS $sentens) {
+        foreach ($sens as $sentens) {
             $tmpsens = preg_replace('/^[0-9\s]*$/i', '', $sentens);
             if (empty($tmpsens)) {
                 continue;
