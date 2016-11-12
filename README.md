@@ -7,7 +7,6 @@
 3. phpunit 설치
 4. phpunit bootstrap 설정
 5. alias 설정
-6. phpcs 확인
-7. phpdoc 확인
-
-
+6. phpcs 설정
+7. phpdox 설정
+8. phpunit 설정
