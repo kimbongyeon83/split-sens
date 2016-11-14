@@ -1,16 +1,58 @@
-<?php declare(strict_types=1);
+<?php
+/**
+ * Sentence Spliter.
+ *
+ * PHP version 7
+ *
+ * @category  PHP
+ * @package   SplitSens
+ * @author    Bong Yeon, Kim <kimbongyeon83@gmail.com>
+ * @copyright xxx
+ * @license   MIT Licence
+ * @link      http://xxxx
+ */
+
+declare(strict_types=1);
 
 namespace SplitSens;
 
+/**
+ * Sentence Spliter.
+ *
+ * PHP version 7
+ *
+ * @category  PHP
+ * @package   SplitSens
+ * @author    Bong Yeon, Kim <kimbongyeon83@gmail.com>
+ * @copyright
+ * @license   MIT Licence
+ * @version   Release: 0.1.0
+ * @link      http://xxxx
+ */
 class SplitSensTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * The object of SplitSens
+     *
+     * @var object
+     */
     private $sens;
 
+    /**
+     * Set up
+     *
+     * @return void
+     */
     public function setup()
     {
         $this->sens = new SplitSens();
     }
 
+    /**
+     * Test Basic.
+     *
+     * @return void
+     */
     public function testBasic()
     {
         $sens = $this->sens;
@@ -33,6 +75,11 @@ DOC;
         $this->assertEquals($sens->split($desc), $result);
     }
 
+    /**
+     * Test decte delimiter from phrase.
+     *
+     * @return void
+     */
     public function testDecteDelimiter()
     {
         $sens = $this->sens;
@@ -44,6 +91,12 @@ DOC;
         $this->assertEquals($sens->split("111\r\nb"), ['b']);
     }
 
+    /**
+     * Decte Delimiter helper.
+     *
+     * @param string $delimiter The defined special char.
+     * @return void
+     */
     private function assertEqualsDelimiter($delimiter)
     {
         $sens = $this->sens;
@@ -51,12 +104,15 @@ DOC;
         $this->assertEquals($sens->split('a' . $delimiter), ['a']);
         $this->assertEquals($sens->split('a' . $delimiter . 'b' . $delimiter), ['a', 'b']);
         $this->assertEquals($sens->split('a' . $delimiter . 'b' . $delimiter . 'c' . $delimiter), ['a', 'b', 'c']);
-
     }
 
+    /**
+     * Test validate parameters.
+     *
+     * @return void
+     */
     public function testValidateParam()
     {
-        # 파라미터 유효성 테스트
         $sens = $this->sens;
         $this->assertEquals($sens->split(), []);
         $this->assertEquals($sens->split(null), []);
@@ -89,13 +145,15 @@ DOC;
         $this->assertEquals($sens->split('a b'), ['a b']);
         $this->assertEquals($sens->split('a b c'), ['a b c']);
         $this->assertEquals($sens->split('a b c d'), ['a b c d']);
-
-        return $sens;
     }
 
+    /**
+     * Test remove special chars.
+     *
+     * @return void
+     */
     public function testRemoveSpecialChar()
     {
-        # 특수문자 제거
         $sens = $this->sens;
         $this->assertEquals($sens->split('['), []);
         $this->assertEquals($sens->split('[('), []);
@@ -104,9 +162,14 @@ DOC;
         $this->assertEquals($sens->split('a[e(c).a[e(c)'), ['aec', 'aec']);
     }
 
+    /**
+     * Test remove range symbol.
+     *
+     * @return void
+     */
     public function testRemoveRangeSymbol()
     {
-        # 【.*】 네용 제거
+        // Remove sentence in 【.*】
         $sens = $this->sens;
         $this->assertEquals($sens->split('【aa】'), []);
         $this->assertEquals($sens->split('【aa】【aa】'), []);
@@ -116,30 +179,36 @@ DOC;
             $sens->split('a【aa】b【aa】c【aa】; a【aa】b【aa】c【aa】'),
             ['abc', 'abc']
         );
-        return $sens;
     }
 
+    /**
+     * Test remove tags.
+     *
+     * @return void
+     */
     public function testStripTags()
     {
-        # tag 제거
+        // Remove tag
         $sens = $this->sens;
         $this->assertEquals($sens->split('<a></a>'), []);
         $this->assertEquals($sens->split('<br>'), []);
         $this->assertEquals($sens->split('<br />'), []);
 
         $this->assertEquals($sens->split('a &nbsp; b<br />'), ['a  b']);
-        return $sens;
     }
 
+    /**
+     * Test remove html special chars.
+     *
+     * @return void
+     */
     public function testRemoveHtmlSpecChar()
     {
-        # html special char 제거
+        // Remove html special char
         $sens = $this->sens;
         $this->assertEquals($sens->split('&nbsp;'), []);
         $this->assertEquals($sens->split('&euro;'), []);
         $this->assertEquals($sens->split('&#x20AC;'), []);
         $this->assertEquals($sens->split('&nbsp; &#x20AC;'), []);
-
-        return $sens;
     }
 }
