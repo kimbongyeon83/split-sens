@@ -1,7 +1,5 @@
 <?php declare(strict_types=1);
-
 namespace SplitSens;
-
 class SplitSens
 {
     public function __construct()

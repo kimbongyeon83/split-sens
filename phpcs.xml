@@ -10,4 +10,5 @@
  <arg value="np"/>
 
  <rule ref="PSR2"/>
+ <rule ref="PHPDOC"/>
 </ruleset>
